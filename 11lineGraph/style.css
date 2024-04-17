@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+.inner {
+  margin-inline: auto;
+}
+
+.app {
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: lightgray;
+  padding: 0.1em 1em;
+  font-size: 0.875rem;
+}
+
+.tooltip-approve,
+.tooltip-disapprove {
+  padding: 0;
+  margin: 0;
+}
