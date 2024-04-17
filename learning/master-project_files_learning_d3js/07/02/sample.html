@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sample</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<style>
+	.chart rect {
+		fill: steelblue;
+	}
+	.axis--x path {
+		display: none;
+	}
+</style>
+</head>
+
+<body>
+	<svg class="chart" width="425" height="425"></svg>
+<script>
+var chart = d3.select('.chart');
+// var margin = {top: 20, right: 30, bottom: 30, left: 40};
+var margin = {top: 20, right: 20, bottom: 30, left: 30};
+var width = +chart.attr('width') - margin.left - margin.right;
+var height = +chart.attr('height') - margin.top - margin.bottom;
+var x = d3.scaleBand()
+	.rangeRound([0, width]).padding(0.1);
+var y = d3.scaleLinear()
+	.range([height, 0]);
+var elements = chart.append('g')
+	.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+d3.tsv('data.tsv', type, function(error, data) {
+	x.domain(data.map(function(d, i) {
+		return d.name;
+	}));
+	y.domain([0, d3.max(data, getValue)]);
+	elements.append('g')
+		.attr('class', 'axis axis--x')
+		.attr('transform', 'translate(0,' + height + ')')
+		.call(d3.axisBottom(x));
+	elements.append('g')
+		.attr('class', 'axis axis--y')
+		.call(d3.axisLeft(y).ticks(10, '%'));
+	elements.selectAll('.bar')
+		.data(data)
+		.enter().append('rect')
+		.attr('class', 'bar')
+		.attr('x', function(d, i) {
+			return x(d.name);
+		})
+		.attr('y', function(d, i) {
+			return y(d.value);
+		})
+		.attr('width', x.bandwidth())
+		.attr('height', function(d, i) {
+			return height - y(d.value);
+		});
+});
+function type(d, i) {
+	d.value = +d.value;
+	return d;
+}
+function getValue(d, i) {
+	return d.value;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sample</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<style>
+	.chart rect {
+		fill: steelblue;
+	}
+	.chart text {
+		fill: white;
+		font: 10px sans-serif;
+		text-anchor: end;
+	}
+</style>
+</head>
+
+<body>
+	<svg class="chart"></svg>
+<script>
+var width = 425;  // 420;
+var height = 425;
+// var barHeight = 20;
+/* var x = d3.scaleLinear()
+	.range([0, width]); */
+var y = d3.scaleLinear()
+	.range([height, 0]);
+var chart = d3.select('.chart')
+	.attr('width', width)
+	.attr('height', height);
+d3.tsv('data.tsv', type, function(error, data) {
+	// x.domain([0, d3.max(data, getValue)]);
+	y.domain([0, d3.max(data, getValue)]);
+	var barWidth = width / data.length;
+	// chart.attr('height', data.length * barHeight);
+	var bar = chart.selectAll('g')
+		.data(data)
+		.enter().append('g')
+		.attr('transform', function(d, i) {
+			// return 'translate(0,' + i * barHeight + ')';
+			return 'translate(' + i * barWidth + ', 0)';
+		});
+	bar.append('rect')
+		.attr('width', barWidth - 1)  /* function(d, i) {
+			return x(d.value);
+		}) */
+		.attr('height', function(d, i) {
+			return y(d.value);
+		});  // barHeight - 1);
+	/* bar.append('text')
+		.attr('x', function(d, i) {
+			return x(d.value) - 3;
+		})
+		.attr('y', (barHeight - 1) / 2)
+		.attr('dy', '0.35em')
+		.text(getValue); */
+});
+function type(d, i) {
+	d.value = +d.value;
+	return d;
+}
+function getValue(d, i) {
+	return d.value;
+}
+</script>
+</body>
+</html>

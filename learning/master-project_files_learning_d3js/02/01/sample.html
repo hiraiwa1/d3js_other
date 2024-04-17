@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sample</title>
+</head>
+
+<body>
+<p>item 1</p>
+<p>item 2</p>
+<p>item 3</p>
+<p>item 4</p>
+<p>item 5</p>
+<p>item 6</p>
+<script>
+	var paragraphs = document.getElementsByTagName('p');
+	var length = paragraphs.length;
+	for (var i = 0; i < length; i++) {
+		var paragraph = paragraphs.item(i);
+		paragraph.style.color = 'lightskyblue';
+	}
+</script>
+</body>
+</html>

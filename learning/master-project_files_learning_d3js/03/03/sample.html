@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sample</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<body>
+<p>item 1</p>
+<p>item 2</p>
+<p>item 3</p>
+<script>
+var p = d3.select('body').selectAll('p');
+p.data([1, 2, 3, 4, 5])
+.enter().append('p')
+.text(function(d, i) {
+	return 'changed ' + d;
+});
+p.data([6, 7, 8, 9, 10])
+.text(function(d, i) {
+	return 'updated ' + d;
+});
+</script>
+</body>
+</html>
